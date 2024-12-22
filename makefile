@@ -1,10 +1,9 @@
-COMPILER := x86_64-w64-mingw32-g++
-# g++ -ljsoncpp
-# FLAGS := 
-# FLAGS_ERROR := -Wall -Wextra -Werror
+COMPILER := g++
+FLAGS := -ljsoncpp
+FLAGS_ERROR := -Wall -Wextra -Werror
 
 SOURCE := program.cpp
-RESULT := program.exe
+RESULT := program
 OBJS = $(SOURCE:.cpp=.o)
 DEPENDACIES := $(SOURCE:.cpp=.d)
 
