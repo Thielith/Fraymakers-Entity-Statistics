@@ -1,0 +1,163 @@
+#include <map>
+#include <string>
+using namespace std;
+
+enum KEYFRAME_LAYER_TYPE {
+	KL_IMAGE,
+	KL_FRAME_SCRIPT,
+	KL_LABEL,
+	KL_COLLISION_BOX,
+	KL_COLLISION_BODY,
+	KL_POINT,
+	KL_LINE_SEGMENT,
+	KL_CONTAINER // wtf does this even do
+};
+
+enum TWEEN_TYPE {
+	TW_LINEAR,
+	TW_EASE_IN_QUAD,
+	TW_EASE_OUT_QUAD,
+	TW_EASE_IN_OUT_QUAD,
+	TW_EASE_IN_CUBIC,
+	TW_EASE_OUT_CUBIC,
+	TW_EASE_IN_OUT_CUBIC,
+	TW_EASE_IN_QUART,
+	TW_EASE_OUT_QUART,
+	TW_EASE_IN_OUT_QUART,
+	TW_EASE_IN_QUINT,
+	TW_EASE_OUT_QUINT,
+	TW_EASE_IN_OUT_QUINT
+};
+
+enum COLLISION_BOX_TYPE {
+	NONE,
+	HURT_BOX,
+	HIT_BOX,
+	GRAB_BOX,
+	LEDGE_GRAB_BOX,
+	REFLECT_BOX,
+	ABSORB_BOX,
+	COUNTER_BOX,
+	CUSTOM_BOX_A,
+	CUSTOM_BOX_B,
+	CUSTOM_BOX_C
+};
+
+enum SYMBOL_TYPE {
+	SYM_IMAGE,
+	SYM_COLLISION_BOX,
+	SYM_COLLISION_BODY,
+	SYM_POINT,
+	SYM_LINE_SEGMENT
+};
+
+class enumTranslate {
+	private:
+		map<string, KEYFRAME_LAYER_TYPE> mapToKeyframeLayerType {
+			{"IMAGE", KL_IMAGE},
+			{"FRAME_SCRIPT", KL_FRAME_SCRIPT},
+			{"LABEL", KL_LABEL},
+			{"COLLISION_BOX", KL_COLLISION_BOX},
+			{"COLLISION_BODY", KL_COLLISION_BODY},
+			{"POINT", KL_POINT},
+			{"LINE_SEGMENT", KL_LINE_SEGMENT},
+			{"CONTAINER", KL_CONTAINER}
+		};
+		map<KEYFRAME_LAYER_TYPE, string> mapToKeyframeLayerTypeName {
+			{KL_IMAGE, "IMAGE"},
+			{KL_FRAME_SCRIPT, "FRAME_SCRIPT"},
+			{KL_LABEL, "LABEL"},
+			{KL_COLLISION_BOX, "COLLISION_BOX"},
+			{KL_COLLISION_BODY, "COLLISION_BODY"},
+			{KL_POINT, "POINT"},
+			{KL_LINE_SEGMENT, "LINE_SEGMENT"},
+			{KL_CONTAINER, "CONTAINER"}
+		};
+
+		map<string, TWEEN_TYPE> mapToTweenType {
+			{"LINEAR", TW_LINEAR},
+			{"EASE_IN_QUAD", TW_EASE_IN_QUAD},
+			{"EASE_OUT_QUAD", TW_EASE_OUT_QUAD},
+			{"EASE_IN_OUT_QUAD", TW_EASE_IN_OUT_QUAD},
+			{"EASE_IN_CUBIC", TW_EASE_IN_CUBIC},
+			{"EASE_OUT_CUBIC", TW_EASE_OUT_CUBIC},
+			{"EASE_IN_OUT_CUBIC", TW_EASE_IN_OUT_CUBIC},
+			{"EASE_IN_QUART", TW_EASE_IN_QUART},
+			{"EASE_OUT_QUART", TW_EASE_OUT_QUART},
+			{"EASE_IN_OUT_QUART", TW_EASE_IN_OUT_QUART},
+			{"EASE_IN_QUINT", TW_EASE_IN_QUINT},
+			{"EASE_OUT_QUINT", TW_EASE_OUT_QUINT},
+			{"EASE_IN_OUT_QUINT", TW_EASE_IN_OUT_QUINT}
+		};
+		map<TWEEN_TYPE, string> mapToTweenTypeName {
+			{TW_LINEAR, "LINEAR"},
+			{TW_EASE_IN_QUAD, "EASE_IN_QUAD"},
+			{TW_EASE_OUT_QUAD, "EASE_OUT_QUAD"},
+			{TW_EASE_IN_OUT_QUAD, "EASE_IN_OUT_QUAD"},
+			{TW_EASE_IN_CUBIC, "EASE_IN_CUBIC"},
+			{TW_EASE_OUT_CUBIC, "EASE_OUT_CUBIC"},
+			{TW_EASE_IN_OUT_CUBIC, "EASE_IN_OUT_CUBIC"},
+			{TW_EASE_IN_QUART, "EASE_IN_QUART"},
+			{TW_EASE_OUT_QUART, "EASE_OUT_QUART"},
+			{TW_EASE_IN_OUT_QUART, "EASE_IN_OUT_QUART"},
+			{TW_EASE_IN_QUINT, "EASE_IN_QUINT"},
+			{TW_EASE_OUT_QUINT, "EASE_OUT_QUINT"},
+			{TW_EASE_IN_OUT_QUINT, "EASE_IN_OUT_QUINT"}
+		};
+
+		map<string, COLLISION_BOX_TYPE> mapToCollisionBoxType {
+			{"NONE", NONE},	
+			{"HURT_BOX", HURT_BOX},
+			{"HIT_BOX", HIT_BOX},
+			{"GRAB_BOX", GRAB_BOX},
+			{"LEDGE_GRAB_BOX", LEDGE_GRAB_BOX},
+			{"REFLECT_BOX", REFLECT_BOX},
+			{"ABSORB_BOX", ABSORB_BOX},
+			{"COUNTER_BOX", COUNTER_BOX},
+			{"CUSTOM_BOX_A", CUSTOM_BOX_A},
+			{"CUSTOM_BOX_B", CUSTOM_BOX_B},
+			{"CUSTOM_BOX_C", CUSTOM_BOX_C}
+		};
+		map<COLLISION_BOX_TYPE, string> mapToCollisionBoxTypeName {
+			{NONE, "NONE"},	
+			{HURT_BOX, "HURT_BOX"},
+			{HIT_BOX, "HIT_BOX"},
+			{GRAB_BOX, "GRAB_BOX"},
+			{LEDGE_GRAB_BOX, "LEDGE_GRAB_BOX"},
+			{REFLECT_BOX, "REFLECT_BOX"},
+			{ABSORB_BOX, "ABSORB_BOX"},
+			{COUNTER_BOX, "COUNTER_BOX"},
+			{CUSTOM_BOX_A, "CUSTOM_BOX_A"},
+			{CUSTOM_BOX_B, "CUSTOM_BOX_B"},
+			{CUSTOM_BOX_C, "CUSTOM_BOX_C"}
+		};
+
+		map<string, SYMBOL_TYPE> mapToSymbolType {
+			{"IMAGE", SYM_IMAGE},
+			{"COLLISION_BOX", SYM_COLLISION_BOX},
+			{"COLLISION_BODY", SYM_COLLISION_BODY},
+			{"POINT", SYM_POINT},
+			{"LINE_SEGMENT", SYM_LINE_SEGMENT}
+		};
+		map<SYMBOL_TYPE, string> mapToSymbolTypeName {
+			{SYM_IMAGE, "IMAGE"},
+			{SYM_COLLISION_BOX, "COLLISION_BOX"},
+			{SYM_COLLISION_BODY, "COLLISION_BODY"},
+			{SYM_POINT, "POINT"},
+			{SYM_LINE_SEGMENT, "LINE_SEGMENT"}
+		};
+
+	public:
+		KEYFRAME_LAYER_TYPE toKeyframeLayerEnum(string input){ return mapToKeyframeLayerType[input]; };
+		string toString(KEYFRAME_LAYER_TYPE input){ return mapToKeyframeLayerTypeName[input]; };
+
+		TWEEN_TYPE toTweenEnum(string input){ return mapToTweenType[input]; };
+		string toString(TWEEN_TYPE input){ return mapToTweenTypeName[input]; };
+		
+		COLLISION_BOX_TYPE toCollisionBoxEnum(string input){ return mapToCollisionBoxType[input]; };
+		string toString(COLLISION_BOX_TYPE input){ return mapToCollisionBoxTypeName[input]; };
+
+		SYMBOL_TYPE toSymbolEnum(string input){ return mapToSymbolType[input]; };
+		string toString(SYMBOL_TYPE input){ return mapToSymbolTypeName[input]; };
+		
+};
