@@ -1,25 +1,33 @@
-COMPILER = g++
-FLAGS = -ljsoncpp
+COMPILER := g++
+FLAGS := -ljsoncpp
 
-SOURCE = program.cpp
-RESULT = program
-
+SOURCE := program.cpp
+RESULT := program
 OBJS = $(SOURCE:.cpp=.o)
+DEPENDACIES := $(SOURCE:.cpp=.d)
 
+# execute rules even if files exist
+.PHONY: all clean
 
-all: $(RESULT) run
+all: linking
 
-# Link object files into the target executable
-$(RESULT): $(OBJS)
-	$(COMPILER) $(FLAGS) -o $(RESULT) $(OBJS)
+clean:
+	$(RM) $(OBJS) $(DEPENDACIES) linking
+
+linking: $(OBJS)
+	$(COMPILER) $(FLAGS) $^ -o $(RESULT)
+
+-include $(DEPENDACIES)
 
 # Compile .cpp files into .o files
 %.o: %.cpp
-	$(COMPILER) $(FLAGS) -c $< -o $@
+	$(COMPILER) $(FLAGS) -MMD -MP -c $< -o $@
 
 # Run result
 run: $(RESULT)
 	./$(RESULT)
 
-clean:
-	del $(RESULT) $(OBJS)
+windows:
+	$(eval COMPILER=x86_64-w64-mingw32-gcc)
+
+

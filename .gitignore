@@ -1,3 +1,5 @@
-
 *.entity
 .vscode
+*.d
+*.o
+*.txt

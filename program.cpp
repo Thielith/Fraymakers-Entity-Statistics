@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include <list>
 
 #include "program.h"
@@ -12,15 +11,57 @@ statTracker tracker;
 enumTranslate enumTranslate;
 
 void printRepetitiveCode();
+void printHelpMessage();
+void processEntity(string);
 
-int main(){
+int main(int argc, char *argv[]){
 	// printRepetitiveCode();
 
-	///*
-	cout << boolalpha;
-	string filePath = "./entity.entity";
+	if(argc < 2){
+		printHelpMessage();
+		return 0;
+	}
+
+	bool fileDefined = false;
+	string filePath;
+	bool outputDefined = false;
+	string outputFilePath = "";
+
+	uint i=1;
+	while(i<argc){
+		// cout << "Argument " << i << ": " << argv[i] << endl;
+		string argument(argv[i]);
+
+		if(!argument.compare("-h")){
+			printHelpMessage();
+			return 0;
+		}
+		else if(!fileDefined && (!argument.compare("--file") || !argument.compare("-f"))){
+			fileDefined = true;
+
+			string path(argv[i+1]);
+			filePath = path;
+			i++;
+		}
+		else if(!outputDefined && (!argument.compare("--output") || !argument.compare("-o"))){
+			outputDefined = true;
+
+			string file(argv[i+1]);
+			outputFilePath = file;
+			
+			i += 2;
+		}
+
+		i++;
+	}
 	
-	ifstream entityFile(filePath, ifstream::binary);
+	processEntity(filePath);
+	tracker.printStats(outputFilePath);
+
+}
+
+void processEntity(string path){
+	ifstream entityFile(path, ifstream::binary);
 	Json::Value data;
 	entityFile >> data;
 
@@ -42,33 +83,29 @@ int main(){
 
 	list<symbol*>* symbols = getSymbols(data);
 	// printSymbolData(symbols);
-
-	tracker.printStats();
-	//*/
-
 }
 
 void printRepetitiveCode(){
 	string variables[] = {
-		// "Animations", "LayersInAllAnimations"
+		"Animations", "LayersInAllAnimations",
 
-		// "Keyframes", "ImageKeyframes", "ScriptKeyframes", "LabelKeyframes",
-		// "CollisionBoxKeyframes", "CollisionBodyKeyframes", "PointKeyframes",
-		// "LineSegmentKeyframes", "ContainerKeyframes",
-		// "TweensEnabled",
-		// "LinearTweens", "EaseInTweens", "EaseOutTweens", "EaseInOutTweens",
-		// "QuadTweens", "CubicTweens", "QuartTweens", "QuintTweens"
+		"Keyframes", "ImageKeyframes", "ScriptKeyframes", "LabelKeyframes",
+		"CollisionBoxKeyframes", "CollisionBodyKeyframes", "PointKeyframes",
+		"LineSegmentKeyframes", "ContainerKeyframes",
+		"TweensEnabled",
+		"LinearTweens", "EaseInTweens", "EaseOutTweens", "EaseInOutTweens",
+		"QuadTweens", "CubicTweens", "QuartTweens", "QuintTweens",
 
-		// "Layers", "ImageLayers", "ScriptLayers", "LabelLayers",
-		// "CollisionBoxLayers", "CollisionBodyLayers", "PointLayers",
-		// "LineSegmentLayers", "ContainerLayers"
+		"Layers", "ImageLayers", "ScriptLayers", "LabelLayers",
+		"CollisionBoxLayers", "CollisionBodyLayers", "PointLayers",
+		"LineSegmentLayers", "ContainerLayers",
 
-		// "NoneBoxes", "HurtBoxes", "HitBoxes", "GrabBoxes", "LedgeGrabBoxes",
-		// "ReflectBoxes", "AbsorbBoxes", "CounterBoxes",
-		// "CustomBoxAs", "CustomBoxBs", "CustomBoxCs"
+		"NoneBoxes", "HurtBoxes", "HitBoxes", "GrabBoxes", "LedgeGrabBoxes",
+		"ReflectBoxes", "AbsorbBoxes", "CounterBoxes",
+		"CustomBoxAs", "CustomBoxBs", "CustomBoxCs",
 
-		// "Symbols", "ImageSymbols", "CollisionBoxSymbols",
-		// "CollisionBodySymbols", "PointSymbols", "LineSegmentSymbols"
+		"Symbols", "ImageSymbols", "CollisionBoxSymbols",
+		"CollisionBodySymbols", "PointSymbols", "LineSegmentSymbols"
 	};
 	cout << "    private:\n";
 	for(string variable : variables){
@@ -84,6 +121,20 @@ void printRepetitiveCode(){
 	for(string variable : variables){
 		cout << "                 << \"" << variable << ": \" << num" << variable << " << endl" << endl;
 	}
+}
+
+void printHelpMessage(){
+	cout << "Optional:\n"
+		 << "-h:\t\t" << "Prints program usage" << endl
+		 << "--output [path+name]\t\t" << "Outputs statistics to a file" << endl
+		 << "-o [path+name]\t\t" << "Alias of --output" << endl
+		 << endl
+		 
+		 << "Mandatory:\n"
+		 << "--file [path]\t\t" << "Path to .entity file" << endl
+		 << "-f [path]\t\t" << "Alias of --file" << endl
+
+		 << endl;
 }
 
 

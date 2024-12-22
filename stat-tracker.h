@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <streambuf>
 using namespace std;
 
 class statTracker {
@@ -157,7 +159,16 @@ class statTracker {
         void incrementLineSegmentSymbols(){ numLineSegmentSymbols++; };
         int getTotalLineSegmentSymbols(){ return numLineSegmentSymbols; };
 
-		void printStats(){
+		void printStats(string outputPath = ""){
+			ofstream output(outputPath);
+			
+			streambuf* coutBuf = cout.rdbuf();
+			if(outputPath.compare("")){
+				cout.rdbuf(output.rdbuf());
+			}
+
+			cout << boolalpha;
+			
 			cout << ".----------------------------.\n"
 				 << "|   Entity Stats According   |\n"
 				 << "|         To The File        |\n"
@@ -225,5 +236,8 @@ class statTracker {
                  << "Line segment symbols: " << numLineSegmentSymbols << endl
 
 				 << endl;
+			
+			cout.rdbuf(coutBuf);
+			output.close();
 		}
 };
