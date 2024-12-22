@@ -8,10 +8,9 @@ typedef struct animation {
 	string name = "";
 } animation;
 
-
 typedef struct keyframe {
 	string id;
-	uint length = 1;
+	unsigned int length = 1;
 	KEYFRAME_LAYER_TYPE type;
 	virtual ~keyframe() = default;
 } keyframe;
@@ -73,11 +72,11 @@ struct layerCollisionBody : layer {
 	}
 	float defaultAlpha = 0.5;
 	string defaultColor = "0xffa500";
-	uint defaultHead = 100.0;
-	uint defaultHipWidth = 50.0;
-	uint defaultHipXOffset = 0.0;
-	uint defaultHipYOffset = 0.0;
-	uint defaultFoot = 0.0;
+	unsigned int defaultHead = 100.0;
+	unsigned int defaultHipWidth = 50.0;
+	unsigned int defaultHipXOffset = 0.0;
+	unsigned int defaultHipYOffset = 0.0;
+	unsigned int defaultFoot = 0.0;
 };
 
 typedef struct {
@@ -150,13 +149,13 @@ struct symbolLineSegment : symbol {
 	float y2 = 0.0;
 };
 
-typedef struct data {
-	list<animation> animations;
+typedef struct {
+	list<animation>* animations;
 	bool shouldExport = true;
 	string guid;
 	string id;
-	list<keyframe*> keyframes;
-	list<layer*> layers;
-	::paletteMap paletteMap;
-	list<symbol*> symbols;
-} data;
+	list<keyframe*>* keyframes;
+	list<layer*>* layers;
+	::paletteMap* paletteMap;
+	list<symbol*>* symbols;
+} entityData;

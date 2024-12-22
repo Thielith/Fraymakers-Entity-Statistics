@@ -1,7 +1,4 @@
-#include <iostream>
-#include <fstream>
 #include <list>
-
 #include "program.h"
 #include "stat-tracker.h"
 
@@ -27,7 +24,7 @@ int main(int argc, char *argv[]){
 	bool outputDefined = false;
 	string outputFilePath = "";
 
-	uint i=1;
+	int i=1;
 	while(i<argc){
 		// cout << "Argument " << i << ": " << argv[i] << endl;
 		string argument(argv[i]);
@@ -83,6 +80,15 @@ void processEntity(string path){
 
 	list<symbol*>* symbols = getSymbols(data);
 	// printSymbolData(symbols);
+
+	entityData entityData;
+	entityData.animations = animations;
+	// entityData.guid
+	// entityData.id
+	entityData.keyframes = keyframes;
+	entityData.layers = layers;
+	entityData.paletteMap = paletteMap;
+	entityData.symbols = symbols;
 }
 
 void printRepetitiveCode(){
@@ -148,7 +154,7 @@ list<animation>* getAnimations(Json::Value data){
 	const string sectionName = "animations";
 	list<animation> *extractedAnimations = new list<animation>;
 
-	uint dataIndex = 0;
+	unsigned int dataIndex = 0;
 	while(data[sectionName][dataIndex]){
 		Json::Value dataSnippit = data[sectionName][dataIndex];
 		animation entry;
@@ -156,7 +162,7 @@ list<animation>* getAnimations(Json::Value data){
 		entry.id = dataSnippit["$id"].asString();
 		entry.name = dataSnippit["name"].asString();
 
-		uint layerIndex = 0;
+		unsigned int layerIndex = 0;
 		while(dataSnippit["layers"][layerIndex]){
 			entry.layerIDs.push_back(dataSnippit["layers"][layerIndex].asString());
 			layerIndex++;
@@ -188,7 +194,7 @@ list<keyframe*>* getKeyframes(Json::Value data){
 	const string sectionName = "keyframes";
 	list<keyframe*> *extractedKeyframes = new list<keyframe*>;
 
-	uint dataIndex = 0;
+	unsigned int dataIndex = 0;
 	while(data[sectionName][dataIndex]){
 		Json::Value dataSnippit = data[sectionName][dataIndex];
 		keyframe* entry = extractKeyframeByType(dataSnippit);
@@ -277,13 +283,13 @@ void printKeyframeData(list<keyframe*>* data){
 		cout << "\tlength: " << entry->length << endl;
 		cout << "\ttype: " << enumTranslate.toString(entry->type) << endl;
 
-		printKeyframeTypeData(entry, entry->type);
+		printKeyframeTypeData(entry);
 
 		cout << endl;
 	}
 }
 
-void printKeyframeTypeData(keyframe* data, KEYFRAME_LAYER_TYPE type){
+void printKeyframeTypeData(keyframe* data){
 	if(keyframeScript* converted = dynamic_cast<keyframeScript*>(data)){
 		cout << "\tcode: \"" << converted->code << "\"" << endl;
 	}
@@ -301,7 +307,7 @@ list<layer*>* getLayers(Json::Value data){
 	const string sectionName = "layers";
 	list<layer*> *extractedLayers = new list<layer*>;
 
-	uint dataIndex = 0;
+	unsigned int dataIndex = 0;
 	while(data[sectionName][dataIndex]){
 		Json::Value dataSnippit = data[sectionName][dataIndex];
 		layer* entry = extractLayerByType(dataSnippit);
@@ -311,7 +317,7 @@ list<layer*>* getLayers(Json::Value data){
 		entry->locked = dataSnippit["locked"].asBool();
 		entry->name = dataSnippit["name"].asString();
 		
-		uint keyframeIndex = 0;
+		unsigned int keyframeIndex = 0;
 		while(dataSnippit["keyframes"][keyframeIndex]){
 			entry->keyframeIDs.push_back(dataSnippit["keyframes"][keyframeIndex].asString());
 			keyframeIndex++;
@@ -429,13 +435,13 @@ void printLayerData(list<layer*>* data){
 		}
 		cout << "\ttype: " << enumTranslate.toString(entry->type) << endl;
 
-		printLayerTypeData(entry, entry->type);
+		printLayerTypeData(entry);
 
 		cout << endl;
 	}
 }
 
-void printLayerTypeData(layer* data, KEYFRAME_LAYER_TYPE type){
+void printLayerTypeData(layer* data){
 	if(layerScript* converted = dynamic_cast<layerScript*>(data)){
 		cout << "\tlanguage: \"" << converted->language << "\"" << endl;
 	}
@@ -483,7 +489,7 @@ list<symbol*>* getSymbols(Json::Value data){
 	const string sectionName = "symbols";
 	list<symbol*> *extracteSymbols = new list<symbol*>;
 
-	uint dataIndex = 0;
+	unsigned int dataIndex = 0;
 	while(data[sectionName][dataIndex]){
 		Json::Value dataSnippit = data[sectionName][dataIndex];
 		symbol* entry = extractSymbolByType(dataSnippit);
@@ -573,52 +579,52 @@ void printSymbolData(list<symbol*>* data){
 		cout << "\tid: " << entry->id << endl;
 		cout << "\talpha: " << entry->alpha << endl;
 
-		printSymbolTypeData(entry, entry->type);
+		printSymbolTypeData(entry);
 
 		cout << endl;
 	}
 }
 
-void printSymbolTypeData(symbol* data, SYMBOL_TYPE type){
-	if(symbolImage* converted = dynamic_cast<symbolImage*>(data)){
-		cout << "\tx: " << converted->x << endl;
-		cout << "\ty: " << converted->y << endl;
-		cout << "\trotation: " << converted->rotation << endl;
-		cout << "\tscaleX: " << converted->scaleX << endl;
-		cout << "\tscaleY: " << converted->scaleY << endl;
-		cout << "\tpivotX: " << converted->pivotX << endl;
-		cout << "\tpivotY: " << converted->pivotY << endl;
+void printSymbolTypeData(symbol* data){
+	if(symbolImage* image = dynamic_cast<symbolImage*>(data)){
+		cout << "\tx: " << image->x << endl;
+		cout << "\ty: " << image->y << endl;
+		cout << "\trotation: " << image->rotation << endl;
+		cout << "\tscaleX: " << image->scaleX << endl;
+		cout << "\tscaleY: " << image->scaleY << endl;
+		cout << "\tpivotX: " << image->pivotX << endl;
+		cout << "\tpivotY: " << image->pivotY << endl;
 	}
-	else if(symbolCollisionBox* converted = dynamic_cast<symbolCollisionBox*>(data)){
-		cout << "\tcolor: " << converted->color << endl;
-		cout << "\tx: " << converted->x << endl;
-		cout << "\ty: " << converted->y << endl;
-		cout << "\trotation: " << converted->rotation << endl;
-		cout << "\tscaleX: " << converted->scaleX << endl;
-		cout << "\tscaleY: " << converted->scaleY << endl;
-		cout << "\tpivotX: " << converted->pivotX << endl;
-		cout << "\tpivotY: " << converted->pivotY << endl;
+	else if(symbolCollisionBox* collisionBox = dynamic_cast<symbolCollisionBox*>(data)){
+		cout << "\tcolor: " << collisionBox->color << endl;
+		cout << "\tx: " << collisionBox->x << endl;
+		cout << "\ty: " << collisionBox->y << endl;
+		cout << "\trotation: " << collisionBox->rotation << endl;
+		cout << "\tscaleX: " << collisionBox->scaleX << endl;
+		cout << "\tscaleY: " << collisionBox->scaleY << endl;
+		cout << "\tpivotX: " << collisionBox->pivotX << endl;
+		cout << "\tpivotY: " << collisionBox->pivotY << endl;
 	}
-	else if(symbolCollisionBody* converted = dynamic_cast<symbolCollisionBody*>(data)){
-		cout << "\tcolor: " << converted->color << endl;
-		cout << "\thead: " << converted->head << endl;
-		cout << "\thipWidth: " << converted->hipWidth << endl;
-		cout << "\thipXOffset: " << converted->hipXOffset << endl;
-		cout << "\thipYOffset: " << converted->hipYOffset << endl;
-		cout << "\tfoot: " << converted->foot << endl;
+	else if(symbolCollisionBody* collisionBody = dynamic_cast<symbolCollisionBody*>(data)){
+		cout << "\tcolor: " << collisionBody->color << endl;
+		cout << "\thead: " << collisionBody->head << endl;
+		cout << "\thipWidth: " << collisionBody->hipWidth << endl;
+		cout << "\thipXOffset: " << collisionBody->hipXOffset << endl;
+		cout << "\thipYOffset: " << collisionBody->hipYOffset << endl;
+		cout << "\tfoot: " << collisionBody->foot << endl;
 	}
-	else if(symbolPoint* converted = dynamic_cast<symbolPoint*>(data)){
-		cout << "\tcolor: " << converted->color << endl;
-		cout << "\tx: " << converted->x << endl;
-		cout << "\ty: " << converted->y << endl;
-		cout << "\trotation: " << converted->rotation << endl;
+	else if(symbolPoint* point = dynamic_cast<symbolPoint*>(data)){
+		cout << "\tcolor: " << point->color << endl;
+		cout << "\tx: " << point->x << endl;
+		cout << "\ty: " << point->y << endl;
+		cout << "\trotation: " << point->rotation << endl;
 	}
-	else if(symbolLineSegment* converted = dynamic_cast<symbolLineSegment*>(data)){
-		cout << "\tcolor: " << converted->color << endl;
-		cout << "\tx1: " << converted->x1 << endl;
-		cout << "\ty1: " << converted->y1 << endl;
-		cout << "\tx2: " << converted->x2 << endl;
-		cout << "\ty2: " << converted->y2 << endl;
+	else if(symbolLineSegment* lineSegment = dynamic_cast<symbolLineSegment*>(data)){
+		cout << "\tcolor: " << lineSegment->color << endl;
+		cout << "\tx1: " << lineSegment->x1 << endl;
+		cout << "\ty1: " << lineSegment->y1 << endl;
+		cout << "\tx2: " << lineSegment->x2 << endl;
+		cout << "\ty2: " << lineSegment->y2 << endl;
 	}
 }
 

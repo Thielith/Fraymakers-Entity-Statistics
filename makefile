@@ -1,8 +1,10 @@
-COMPILER := g++
-FLAGS := -ljsoncpp
+COMPILER := x86_64-w64-mingw32-g++
+# g++ -ljsoncpp
+# FLAGS := 
+# FLAGS_ERROR := -Wall -Wextra -Werror
 
 SOURCE := program.cpp
-RESULT := program
+RESULT := program.exe
 OBJS = $(SOURCE:.cpp=.o)
 DEPENDACIES := $(SOURCE:.cpp=.d)
 
@@ -15,7 +17,7 @@ clean:
 	$(RM) $(OBJS) $(DEPENDACIES) linking
 
 linking: $(OBJS)
-	$(COMPILER) $(FLAGS) $^ -o $(RESULT)
+	$(COMPILER) $(FLAGS_ERROR) $(FLAGS) $^ -o $(RESULT)
 
 -include $(DEPENDACIES)
 
@@ -26,8 +28,5 @@ linking: $(OBJS)
 # Run result
 run: $(RESULT)
 	./$(RESULT)
-
-windows:
-	$(eval COMPILER=x86_64-w64-mingw32-gcc)
 
 
