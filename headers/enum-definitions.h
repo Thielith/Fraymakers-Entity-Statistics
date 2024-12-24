@@ -1,6 +1,8 @@
+#ifndef ENTITY_DATA_ENUM_DEF_H
+#define ENTITY_DATA_ENUM_DEF_H
+
 #include <map>
 #include <string>
-using namespace std;
 
 enum KEYFRAME_LAYER_TYPE {
 	KL_IMAGE,
@@ -67,7 +69,7 @@ enum OBJECT_TYPE {
 
 class enumTranslate {
 	private:
-		map<string, KEYFRAME_LAYER_TYPE> mapToKeyframeLayerType {
+		std::map<std::string, KEYFRAME_LAYER_TYPE> mapToKeyframeLayerType {
 			{"IMAGE", KL_IMAGE},
 			{"FRAME_SCRIPT", KL_FRAME_SCRIPT},
 			{"LABEL", KL_LABEL},
@@ -77,7 +79,7 @@ class enumTranslate {
 			{"LINE_SEGMENT", KL_LINE_SEGMENT},
 			{"CONTAINER", KL_CONTAINER}
 		};
-		map<KEYFRAME_LAYER_TYPE, string> mapToKeyframeLayerTypeName {
+		std::map<KEYFRAME_LAYER_TYPE, std::string> mapToKeyframeLayerTypeName {
 			{KL_IMAGE, "IMAGE"},
 			{KL_FRAME_SCRIPT, "FRAME_SCRIPT"},
 			{KL_LABEL, "LABEL"},
@@ -88,7 +90,7 @@ class enumTranslate {
 			{KL_CONTAINER, "CONTAINER"}
 		};
 
-		map<string, TWEEN_TYPE> mapToTweenType {
+		std::map<std::string, TWEEN_TYPE> mapToTweenType {
 			{"LINEAR", TW_LINEAR},
 			{"EASE_IN_QUAD", TW_EASE_IN_QUAD},
 			{"EASE_OUT_QUAD", TW_EASE_OUT_QUAD},
@@ -103,7 +105,7 @@ class enumTranslate {
 			{"EASE_OUT_QUINT", TW_EASE_OUT_QUINT},
 			{"EASE_IN_OUT_QUINT", TW_EASE_IN_OUT_QUINT}
 		};
-		map<TWEEN_TYPE, string> mapToTweenTypeName {
+		std::map<TWEEN_TYPE, std::string> mapToTweenTypeName {
 			{TW_LINEAR, "LINEAR"},
 			{TW_EASE_IN_QUAD, "EASE_IN_QUAD"},
 			{TW_EASE_OUT_QUAD, "EASE_OUT_QUAD"},
@@ -119,7 +121,7 @@ class enumTranslate {
 			{TW_EASE_IN_OUT_QUINT, "EASE_IN_OUT_QUINT"}
 		};
 
-		map<string, COLLISION_BOX_TYPE> mapToCollisionBoxType {
+		std::map<std::string, COLLISION_BOX_TYPE> mapToCollisionBoxType {
 			{"NONE", NONE},	
 			{"HURT_BOX", HURT_BOX},
 			{"HIT_BOX", HIT_BOX},
@@ -132,7 +134,7 @@ class enumTranslate {
 			{"CUSTOM_BOX_B", CUSTOM_BOX_B},
 			{"CUSTOM_BOX_C", CUSTOM_BOX_C}
 		};
-		map<COLLISION_BOX_TYPE, string> mapToCollisionBoxTypeName {
+		std::map<COLLISION_BOX_TYPE, std::string> mapToCollisionBoxTypeName {
 			{NONE, "NONE"},	
 			{HURT_BOX, "HURT_BOX"},
 			{HIT_BOX, "HIT_BOX"},
@@ -146,14 +148,14 @@ class enumTranslate {
 			{CUSTOM_BOX_C, "CUSTOM_BOX_C"}
 		};
 
-		map<string, SYMBOL_TYPE> mapToSymbolType {
+		std::map<std::string, SYMBOL_TYPE> mapToSymbolType {
 			{"IMAGE", SYM_IMAGE},
 			{"COLLISION_BOX", SYM_COLLISION_BOX},
 			{"COLLISION_BODY", SYM_COLLISION_BODY},
 			{"POINT", SYM_POINT},
 			{"LINE_SEGMENT", SYM_LINE_SEGMENT}
 		};
-		map<SYMBOL_TYPE, string> mapToSymbolTypeName {
+		std::map<SYMBOL_TYPE, std::string> mapToSymbolTypeName {
 			{SYM_IMAGE, "IMAGE"},
 			{SYM_COLLISION_BOX, "COLLISION_BOX"},
 			{SYM_COLLISION_BODY, "COLLISION_BODY"},
@@ -161,7 +163,7 @@ class enumTranslate {
 			{SYM_LINE_SEGMENT, "LINE_SEGMENT"}
 		};
 
-		map<string, OBJECT_TYPE> mapToObjectType {
+		std::map<std::string, OBJECT_TYPE> mapToObjectType {
 			{"NONE", OBJ_NONE},
 			{"CHARACTER", OBJ_CHARACTER},
 			{"PROJECTILE", OBJ_PROJECTILE},
@@ -174,7 +176,7 @@ class enumTranslate {
 			{"MATCH_RULES", OBJ_MATCH_RULES},
 			{"CUSTOM_GAME_OBJECT", OBJ_CUSTOM_GAME_OBJECT}
 		};
-		map<OBJECT_TYPE, string> mapToObjectTypeName {
+		std::map<OBJECT_TYPE, std::string> mapToObjectTypeName {
 			{OBJ_NONE, "NONE"},
 			{OBJ_CHARACTER, "CHARACTER"},
 			{OBJ_PROJECTILE, "PROJECTILE"},
@@ -189,19 +191,21 @@ class enumTranslate {
 		};
 
 	public:
-		KEYFRAME_LAYER_TYPE toKeyframeLayerEnum(string input){ return mapToKeyframeLayerType[input]; };
-		string toString(KEYFRAME_LAYER_TYPE input){ return mapToKeyframeLayerTypeName[input]; };
+		KEYFRAME_LAYER_TYPE toKeyframeLayerEnum(std::string input){ return mapToKeyframeLayerType[input]; };
+		std::string toString(KEYFRAME_LAYER_TYPE input){ return mapToKeyframeLayerTypeName[input]; };
 
-		TWEEN_TYPE toTweenEnum(string input){ return mapToTweenType[input]; };
-		string toString(TWEEN_TYPE input){ return mapToTweenTypeName[input]; };
+		TWEEN_TYPE toTweenEnum(std::string input){ return mapToTweenType[input]; };
+		std::string toString(TWEEN_TYPE input){ return mapToTweenTypeName[input]; };
 		
-		COLLISION_BOX_TYPE toCollisionBoxEnum(string input){ return mapToCollisionBoxType[input]; };
-		string toString(COLLISION_BOX_TYPE input){ return mapToCollisionBoxTypeName[input]; };
+		COLLISION_BOX_TYPE toCollisionBoxEnum(std::string input){ return mapToCollisionBoxType[input]; };
+		std::string toString(COLLISION_BOX_TYPE input){ return mapToCollisionBoxTypeName[input]; };
 
-		SYMBOL_TYPE toSymbolEnum(string input){ return mapToSymbolType[input]; };
-		string toString(SYMBOL_TYPE input){ return mapToSymbolTypeName[input]; };
+		SYMBOL_TYPE toSymbolEnum(std::string input){ return mapToSymbolType[input]; };
+		std::string toString(SYMBOL_TYPE input){ return mapToSymbolTypeName[input]; };
 
-		OBJECT_TYPE toObjectEnum(string input){ return mapToObjectType[input]; };
-		string toString(OBJECT_TYPE input){ return mapToObjectTypeName[input]; };
+		OBJECT_TYPE toObjectEnum(std::string input){ return mapToObjectType[input]; };
+		std::string toString(OBJECT_TYPE input){ return mapToObjectTypeName[input]; };
 		
 };
+
+#endif

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 
-#include "entityDataExtractor.cpp"
+#include "headers/extractor.h"
 
 using namespace std;
 
@@ -55,7 +55,6 @@ int main(int argc, char *argv[]){
 		cout << "Error: No file defined.\n";
 		return -1;
 	}
-
 
 	entityData* data = extractor.extractEntityData(filePath);
 	extractor.printStats(outputFilePath);

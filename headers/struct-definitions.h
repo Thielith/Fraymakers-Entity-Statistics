@@ -1,15 +1,17 @@
+#ifndef ENTITY_DATA_STRUCT_DEF_H
+#define ENTITY_DATA_STRUCT_DEF_H
+
 #include <list>
 #include "enum-definitions.h"
-using namespace std;
 
 typedef struct animation {
-	string id;
-	list<string> layerIDs;
-	string name = "";
+	std::string id;
+	std::list<std::string> layerIDs;
+	std::string name = "";
 } animation;
 
 typedef struct keyframe {
-	string id;
+	std::string id;
 	unsigned int length = 1;
 	KEYFRAME_LAYER_TYPE type;
 	virtual ~keyframe() = default;
@@ -19,14 +21,14 @@ struct keyframeScript : keyframe {
 	keyframeScript(){
 		this->type = KL_FRAME_SCRIPT;
 	}
-	string code = "";
+	std::string code = "";
 };
 
 struct keyframeAnimated : keyframe {
 	keyframeAnimated(KEYFRAME_LAYER_TYPE type){
 		this->type = type;
 	}
-	string symbolID;
+	std::string symbolID;
 	TWEEN_TYPE tweenType = TW_LINEAR;
 	bool tweened = false;
 };
@@ -35,16 +37,16 @@ struct keyframeLabel : keyframe {
 	keyframeLabel(){
 		this->type = KL_LABEL;
 	}
-	string name = "";
+	std::string name = "";
 };
 
 
 typedef struct layer {
-	string id;
+	std::string id;
 	bool hidden = false;
-	list<string> keyframeIDs;
+	std::list<std::string> keyframeIDs;
 	bool locked = false;
-	string name = "";
+	std::string name = "";
 	KEYFRAME_LAYER_TYPE type;
 	virtual ~layer() = default;
 } layer;
@@ -53,7 +55,7 @@ struct layerScript : layer {
 	layerScript(){
 		this->type = KL_FRAME_SCRIPT;
 	}
-	string language = "";
+	std::string language = "";
 };
 
 struct layerCollisionBox : layer {
@@ -61,7 +63,7 @@ struct layerCollisionBox : layer {
 		this->type = KL_COLLISION_BOX;
 	}
 	float defaultAlpha = 0.5;
-	string defaultColor = "0x000000";
+	std::string defaultColor = "0x000000";
 	COLLISION_BOX_TYPE collisionBoxType = NONE;
 	int collisionBoxIndex = 0;
 };
@@ -71,7 +73,7 @@ struct layerCollisionBody : layer {
 		this->type = KL_COLLISION_BODY;
 	}
 	float defaultAlpha = 0.5;
-	string defaultColor = "0xffa500";
+	std::string defaultColor = "0xffa500";
 	unsigned int defaultHead = 100.0;
 	unsigned int defaultHipWidth = 50.0;
 	unsigned int defaultHipXOffset = 0.0;
@@ -80,13 +82,13 @@ struct layerCollisionBody : layer {
 };
 
 typedef struct {
-	string palletteCollectionID;
-	string paletteMapID;
+	std::string palletteCollectionID;
+	std::string paletteMapID;
 } paletteMap;
 
 
 typedef struct symbol {
-	string id;
+	std::string id;
 	float alpha = 1.0;
 	SYMBOL_TYPE type;
 	virtual ~symbol() = default;
@@ -109,21 +111,21 @@ struct symbolImage : symbolWithScale {
 	symbolImage(){
 		this->type = SYM_IMAGE;
 	}
-	string imageAssetID;
+	std::string imageAssetID;
 };
 
 struct symbolCollisionBox : symbolWithScale {
 	symbolCollisionBox(){
 		this->type = SYM_COLLISION_BOX;
 	}
-	string color = "null";
+	std::string color = "null";
 };
 
 struct symbolCollisionBody : symbol {
 	symbolCollisionBody(){
 		this->type = SYM_COLLISION_BODY;
 	}
-	string color = "null";
+	std::string color = "null";
 	float head = 100.0;
 	float hipWidth = 50.0;
 	float hipXOffset = 0.0;
@@ -135,14 +137,14 @@ struct symbolPoint : symbolWithOrigin {
 	symbolPoint(){
 		this->type = SYM_POINT;
 	}
-	string color = "0xff0000";
+	std::string color = "0xff0000";
 };
 
 struct symbolLineSegment : symbol {
 	symbolLineSegment(){
 		this->type = SYM_LINE_SEGMENT;
 	}
-	string color = "0xcccccc";
+	std::string color = "0xcccccc";
 	float x1 = 0.0;
 	float y1 = 0.0;
 	float x2 = 0.0;
@@ -150,14 +152,16 @@ struct symbolLineSegment : symbol {
 };
 
 typedef struct entityData {
-	list<animation>* animations;
+	std::list<animation>* animations;
 	bool shouldExport;
-	string guid;
-	string id;
-	list<keyframe*>* keyframes;
-	list<layer*>* layers;
+	std::string guid;
+	std::string id;
+	std::list<keyframe*>* keyframes;
+	std::list<layer*>* layers;
 	::paletteMap* paletteMap;
-	list<symbol*>* symbols;
+	std::list<symbol*>* symbols;
 	OBJECT_TYPE objectType;
-	string objectVersion;
+	std::string objectVersion;
 } entityData;
+
+#endif

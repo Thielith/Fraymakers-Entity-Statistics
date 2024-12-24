@@ -1,7 +1,9 @@
+#ifndef ENTITY_DATA_STAT_TRACKER_H
+#define ENTITY_DATA_STAT_TRACKER_H
+
 #include <iostream>
 #include <fstream>
 #include <streambuf>
-using namespace std;
 
 class statTracker {
     private:
@@ -159,85 +161,87 @@ class statTracker {
         void incrementLineSegmentSymbols(){ numLineSegmentSymbols++; };
         unsigned int getTotalLineSegmentSymbols(){ return numLineSegmentSymbols; };
 
-		void printStats(string outputPath = ""){
-			ofstream output(outputPath);
+		void printStats(std::string outputPath = ""){
+			std::ofstream output(outputPath);
 			
-			streambuf* coutBuf = cout.rdbuf();
+			std::streambuf* coutBuf = std::cout.rdbuf();
 			if(outputPath.compare("")){
-				cout.rdbuf(output.rdbuf());
+				std::cout.rdbuf(output.rdbuf());
 			}
 
-			cout << boolalpha;
+			std::cout << std::boolalpha;
 			
-			cout << ".----------------------------.\n"
+			std::cout << ".----------------------------.\n"
 				 << "|   Entity Stats According   |\n"
 				 << "|         To The File        |\n"
 				 << "'----------------------------'\n\n";
 				 
-            cout << "Animations: " << numAnimations << endl
-				 << "Average number of layers per animation: " << getAverageLayersPerAnimation() << endl
-				 << endl;
+            std::cout << "Animations: " << numAnimations << std::endl
+				 << "Average number of layers per animation: " << getAverageLayersPerAnimation() << std::endl
+				 << std::endl;
 
-            cout << "Unique keyframes: " << numKeyframes << endl
-                 << "Unique image keyframes: " << numImageKeyframes << endl
-                 << "Unique script keyframes: " << numScriptKeyframes << endl
-                 << "Unique label keyframes: " << numLabelKeyframes << endl
-                 << "Unique collision box keyframes: " << numCollisionBoxKeyframes << endl
-                 << "Unique collision body keyframes: " << numCollisionBodyKeyframes << endl
-                 << "Unique point keyframes: " << numPointKeyframes << endl
-                 << "Unique line segment keyframes: " << numLineSegmentKeyframes << endl
-                 << "Unique container keyframes: " << numContainerKeyframes << endl
-				 << endl;
+            std::cout << "Unique keyframes: " << numKeyframes << std::endl
+                 << "Unique image keyframes: " << numImageKeyframes << std::endl
+                 << "Unique script keyframes: " << numScriptKeyframes << std::endl
+                 << "Unique label keyframes: " << numLabelKeyframes << std::endl
+                 << "Unique collision box keyframes: " << numCollisionBoxKeyframes << std::endl
+                 << "Unique collision body keyframes: " << numCollisionBodyKeyframes << std::endl
+                 << "Unique point keyframes: " << numPointKeyframes << std::endl
+                 << "Unique line segment keyframes: " << numLineSegmentKeyframes << std::endl
+                 << "Unique container keyframes: " << numContainerKeyframes << std::endl
+				 << std::endl;
 
-			cout << "Tweened keyframes: " << numTweensEnabled << endl
-                 << "Linear tweens: " << numLinearTweens << endl
-                 << "Ease in tweens: " << numEaseInTweens << endl
-                 << "Ease out tweens: " << numEaseOutTweens << endl
-                 << "Ease in out tweens: " << numEaseInOutTweens << endl
-                 << "Quad tweens: " << numQuadTweens << endl
-                 << "Cubic tweens: " << numCubicTweens << endl
-                 << "Quart tweens: " << numQuartTweens << endl
-                 << "Quint tweens: " << numQuintTweens << endl
-				 << endl;
+			std::cout << "Tweened keyframes: " << numTweensEnabled << std::endl
+                 << "Linear tweens: " << numLinearTweens << std::endl
+                 << "Ease in tweens: " << numEaseInTweens << std::endl
+                 << "Ease out tweens: " << numEaseOutTweens << std::endl
+                 << "Ease in out tweens: " << numEaseInOutTweens << std::endl
+                 << "Quad tweens: " << numQuadTweens << std::endl
+                 << "Cubic tweens: " << numCubicTweens << std::endl
+                 << "Quart tweens: " << numQuartTweens << std::endl
+                 << "Quint tweens: " << numQuintTweens << std::endl
+				 << std::endl;
 
-			cout << "Percentage of keyframes tweened: " << getPercentOfKeyframesTweened() << "%" << endl
-				 << endl;
+			std::cout << "Percentage of keyframes tweened: " << getPercentOfKeyframesTweened() << "%" << std::endl
+				 << std::endl;
 
-            cout << "Layers: " << numLayers << endl
-                 << "Image layers: " << numImageLayers << endl
-                 << "Script layers: " << numScriptLayers << endl
-                 << "Label layers: " << numLabelLayers << endl
-                 << "Collision box layers: " << numCollisionBoxLayers << endl
-                 << "Collision body layers: " << numCollisionBodyLayers << endl
-                 << "Point layers: " << numPointLayers << endl
-                 << "Line segment layers: " << numLineSegmentLayers << endl
-                 << "Container layers: " << numContainerLayers << endl
-				 << endl;
+            std::cout << "Layers: " << numLayers << std::endl
+                 << "Image layers: " << numImageLayers << std::endl
+                 << "Script layers: " << numScriptLayers << std::endl
+                 << "Label layers: " << numLabelLayers << std::endl
+                 << "Collision box layers: " << numCollisionBoxLayers << std::endl
+                 << "Collision body layers: " << numCollisionBodyLayers << std::endl
+                 << "Point layers: " << numPointLayers << std::endl
+                 << "Line segment layers: " << numLineSegmentLayers << std::endl
+                 << "Container layers: " << numContainerLayers << std::endl
+				 << std::endl;
 
-            cout << "Collision Box Types:\n"
-				 << "None boxes: " << numNoneBoxes << endl
-                 << "Hurt boxes: " << numHurtBoxes << endl
-                 << "Hit boxes: " << numHitBoxes << endl
-                 << "Grab boxes: " << numGrabBoxes << endl
-                 << "Ledge grab boxes: " << numLedgeGrabBoxes << endl
-                 << "Reflect boxes: " << numReflectBoxes << endl
-                 << "Absorb boxes: " << numAbsorbBoxes << endl
-                 << "Counter boxes: " << numCounterBoxes << endl
-                 << "Custom box As: " << numCustomBoxAs << endl
-                 << "Custom box Bs: " << numCustomBoxBs << endl
-                 << "Custom box Cs: " << numCustomBoxCs << endl
-				 << endl;
+            std::cout << "Collision Box Types:\n"
+				 << "None boxes: " << numNoneBoxes << std::endl
+                 << "Hurt boxes: " << numHurtBoxes << std::endl
+                 << "Hit boxes: " << numHitBoxes << std::endl
+                 << "Grab boxes: " << numGrabBoxes << std::endl
+                 << "Ledge grab boxes: " << numLedgeGrabBoxes << std::endl
+                 << "Reflect boxes: " << numReflectBoxes << std::endl
+                 << "Absorb boxes: " << numAbsorbBoxes << std::endl
+                 << "Counter boxes: " << numCounterBoxes << std::endl
+                 << "Custom box As: " << numCustomBoxAs << std::endl
+                 << "Custom box Bs: " << numCustomBoxBs << std::endl
+                 << "Custom box Cs: " << numCustomBoxCs << std::endl
+				 << std::endl;
 			
-			cout << "Symbols: " << numSymbols << endl
-                 << "Image symbols: " << numImageSymbols << endl
-                 << "Collision box symbols: " << numCollisionBoxSymbols << endl
-                 << "Collision body symbols: " << numCollisionBodySymbols << endl
-                 << "Point symbols: " << numPointSymbols << endl
-                 << "Line segment symbols: " << numLineSegmentSymbols << endl
+			std::cout << "Symbols: " << numSymbols << std::endl
+                 << "Image symbols: " << numImageSymbols << std::endl
+                 << "Collision box symbols: " << numCollisionBoxSymbols << std::endl
+                 << "Collision body symbols: " << numCollisionBodySymbols << std::endl
+                 << "Point symbols: " << numPointSymbols << std::endl
+                 << "Line segment symbols: " << numLineSegmentSymbols << std::endl
 
-				 << endl;
+				 << std::endl;
 			
-			cout.rdbuf(coutBuf);
+			std::cout.rdbuf(coutBuf);
 			output.close();
 		}
 };
+
+#endif

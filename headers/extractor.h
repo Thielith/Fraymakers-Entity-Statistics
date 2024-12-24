@@ -1,26 +1,36 @@
-#include "headers/entity-data-extractor.h"
-#include "headers/stat-tracker.h"
+#ifndef ENTITY_DATA_EXTRACTOR_H
+#define ENTITY_DATA_EXTRACTOR_H
+
+// Linux
+#include <json/json.h>
+// Windows
+// #include "external/jsoncpp-master/src/lib_json/json_reader.cpp"
+// #include "external/jsoncpp-master/src/lib_json/json_value.cpp"
+// #include "external/jsoncpp-master/src/lib_json/json_writer.cpp"
+
+#include "stat-tracker.h"
+#include "struct-definitions.h"
 
 class entityDataExtractor {
 	public:
-		entityData* extractEntityData(string path){
-			ifstream entityFile(path, ifstream::binary);
+		entityData* extractEntityData(std::string path){
+			std::ifstream entityFile(path, std::ifstream::binary);
 			Json::Value data;
 			entityFile >> data;
 
-			list<animation>* animations = getAnimations(data);
+			std::list<animation>* animations = getAnimations(data);
 			// printAnimationData(animations);
 
-			list<keyframe*>* keyframes = getKeyframes(data);
+			std::list<keyframe*>* keyframes = getKeyframes(data);
 			// printKeyframeData(keyframes);
 
-			list<layer*>* layers = getLayers(data);
+			std::list<layer*>* layers = getLayers(data);
 			// printLayerData(layers);
 
 			paletteMap* paletteMap = getPaletteMap(data);
 			// printPaletteMapData(paletteMap);
 
-			list<symbol*>* symbols = getSymbols(data);
+			std::list<symbol*>* symbols = getSymbols(data);
 			// printSymbolData(symbols);
 
 			entityData* extractedData = new entityData;
@@ -45,7 +55,7 @@ class entityDataExtractor {
 		void printStats(){
 			tracker.printStats();
 		}
-		void printStats(string outputPath){
+		void printStats(std::string outputPath){
 			tracker.printStats(outputPath);
 		}
 		
@@ -53,9 +63,9 @@ class entityDataExtractor {
 		statTracker tracker;
 		enumTranslate translator;
 	
-		list<animation>* getAnimations(Json::Value data){
-			const string sectionName = "animations";
-			list<animation> *extractedAnimations = new list<animation>;
+		std::list<animation>* getAnimations(Json::Value data){
+			const std::string sectionName = "animations";
+			std::list<animation> *extractedAnimations = new std::list<animation>;
 
 			unsigned int dataIndex = 0;
 			while(data[sectionName][dataIndex]){
@@ -79,22 +89,22 @@ class entityDataExtractor {
 
 			return extractedAnimations;
 		}
-		void printAnimationData(list<animation>* data){
+		void printAnimationData(std::list<animation>* data){
 			printTitle("Animations");
 			for(animation entry : *data){
-				cout << entry.name << endl;
-				cout << "\tid: " << entry.id << endl;
+				std::cout << entry.name << std::endl;
+				std::cout << "\tid: " << entry.id << std::endl;
 				
-				cout << "\tlayer IDs:\n";
-				for(string layerID : entry.layerIDs){
-					cout << "\t\t" << layerID << endl;
+				std::cout << "\tlayer IDs:\n";
+				for(std::string layerID : entry.layerIDs){
+					std::cout << "\t\t" << layerID << std::endl;
 				}
 			}
 		}
 
-		list<keyframe*>* getKeyframes(Json::Value data){
-			const string sectionName = "keyframes";
-			list<keyframe*> *extractedKeyframes = new list<keyframe*>;
+		std::list<keyframe*>* getKeyframes(Json::Value data){
+			const std::string sectionName = "keyframes";
+			std::list<keyframe*> *extractedKeyframes = new std::list<keyframe*>;
 
 			unsigned int dataIndex = 0;
 			while(data[sectionName][dataIndex]){
@@ -176,35 +186,35 @@ class entityDataExtractor {
 
 			return nullptr;
 		}
-		void printKeyframeData(list<keyframe*>* data){
+		void printKeyframeData(std::list<keyframe*>* data){
 			printTitle("Keyframes");
 			for(keyframe* entry : *data){
-				cout << "\tid: " << entry->id << endl;
-				cout << "\tlength: " << entry->length << endl;
-				cout << "\ttype: " << translator.toString(entry->type) << endl;
+				std::cout << "\tid: " << entry->id << std::endl;
+				std::cout << "\tlength: " << entry->length << std::endl;
+				std::cout << "\ttype: " << translator.toString(entry->type) << std::endl;
 
 				printKeyframeTypeData(entry);
 
-				cout << endl;
+				std::cout << std::endl;
 			}
 		}
 		void printKeyframeTypeData(keyframe* data){
 			if(keyframeScript* converted = dynamic_cast<keyframeScript*>(data)){
-				cout << "\tcode: \"" << converted->code << "\"" << endl;
+				std::cout << "\tcode: \"" << converted->code << "\"" << std::endl;
 			}
 			else if(keyframeAnimated* converted = dynamic_cast<keyframeAnimated*>(data)){
-				cout << "\tsymbolID: \"" << converted->symbolID << "\"" << endl;
-				cout << "\ttweenType: " << converted->tweenType << endl;
-				cout << "\ttweened: " << converted->tweened << endl;
+				std::cout << "\tsymbolID: \"" << converted->symbolID << "\"" << std::endl;
+				std::cout << "\ttweenType: " << converted->tweenType << std::endl;
+				std::cout << "\ttweened: " << converted->tweened << std::endl;
 			}
 			else if(keyframeLabel* converted = dynamic_cast<keyframeLabel*>(data)){
-				cout << "\tname: \"" << converted->name << "\"" << endl;
+				std::cout << "\tname: \"" << converted->name << "\"" << std::endl;
 			}
 		}
 
-		list<layer*>* getLayers(Json::Value data){
-			const string sectionName = "layers";
-			list<layer*> *extractedLayers = new list<layer*>;
+		std::list<layer*>* getLayers(Json::Value data){
+			const std::string sectionName = "layers";
+			std::list<layer*> *extractedLayers = new std::list<layer*>;
 
 			unsigned int dataIndex = 0;
 			while(data[sectionName][dataIndex]){
@@ -318,49 +328,49 @@ class entityDataExtractor {
 
 			return nullptr;
 		}
-		void printLayerData(list<layer*>* data){
+		void printLayerData(std::list<layer*>* data){
 			printTitle("Layers");
 			for(layer* entry : *data){
-				cout << "\tname: " << entry->name << endl;
-				cout << "\tid: " << entry->id << endl;
-				cout << "\thidden: " << entry->hidden << endl;
-				cout << "\tlocked: " << entry->locked << endl;
+				std::cout << "\tname: " << entry->name << std::endl;
+				std::cout << "\tid: " << entry->id << std::endl;
+				std::cout << "\thidden: " << entry->hidden << std::endl;
+				std::cout << "\tlocked: " << entry->locked << std::endl;
 
-				cout << "\tkeyframe IDs:\n";
-				for(string keyframeID : entry->keyframeIDs){
-					cout << "\t\t" << keyframeID << endl;
+				std::cout << "\tkeyframe IDs:\n";
+				for(std::string keyframeID : entry->keyframeIDs){
+					std::cout << "\t\t" << keyframeID << std::endl;
 				}
-				cout << "\ttype: " << translator.toString(entry->type) << endl;
+				std::cout << "\ttype: " << translator.toString(entry->type) << std::endl;
 
 				printLayerTypeData(entry);
 
-				cout << endl;
+				std::cout << std::endl;
 			}
 		}
 		void printLayerTypeData(layer* data){
 			if(layerScript* converted = dynamic_cast<layerScript*>(data)){
-				cout << "\tlanguage: \"" << converted->language << "\"" << endl;
+				std::cout << "\tlanguage: \"" << converted->language << "\"" << std::endl;
 			}
 			else if(layerCollisionBox* converted = dynamic_cast<layerCollisionBox*>(data)){
-				cout << "\tdefaultAlpha: " << converted->defaultAlpha << endl;
-				cout << "\tdefaultColor: " << converted->defaultColor << endl;
-				cout << "\tcollisionBoxType: " << translator.toString(converted->collisionBoxType) << endl;
-				cout << "\tindex: " << converted->collisionBoxIndex << endl;
+				std::cout << "\tdefaultAlpha: " << converted->defaultAlpha << std::endl;
+				std::cout << "\tdefaultColor: " << converted->defaultColor << std::endl;
+				std::cout << "\tcollisionBoxType: " << translator.toString(converted->collisionBoxType) << std::endl;
+				std::cout << "\tindex: " << converted->collisionBoxIndex << std::endl;
 
 			}
 			else if(layerCollisionBody* converted = dynamic_cast<layerCollisionBody*>(data)){
-				cout << "\tdefaultAlpha: " << converted->defaultAlpha << endl;
-				cout << "\tdefaultColor: " << converted->defaultColor << endl;
-				cout << "\tdefaultHead: " << converted->defaultHead << endl;
-				cout << "\tdefaultHipWidth: " << converted->defaultHipWidth << endl;
-				cout << "\tdefaultHipXOffset: " << converted->defaultHipXOffset << endl;
-				cout << "\tdefaultHipYOffset: " << converted->defaultHipYOffset << endl;
-				cout << "\tdefaultFoot: " << converted->defaultFoot << endl;
+				std::cout << "\tdefaultAlpha: " << converted->defaultAlpha << std::endl;
+				std::cout << "\tdefaultColor: " << converted->defaultColor << std::endl;
+				std::cout << "\tdefaultHead: " << converted->defaultHead << std::endl;
+				std::cout << "\tdefaultHipWidth: " << converted->defaultHipWidth << std::endl;
+				std::cout << "\tdefaultHipXOffset: " << converted->defaultHipXOffset << std::endl;
+				std::cout << "\tdefaultHipYOffset: " << converted->defaultHipYOffset << std::endl;
+				std::cout << "\tdefaultFoot: " << converted->defaultFoot << std::endl;
 			}
 		}
 
 		paletteMap* getPaletteMap(Json::Value data){
-			const string sectionName = "paletteMap";
+			const std::string sectionName = "paletteMap";
 			paletteMap *extractedPaletteMap = new paletteMap;
 
 			extractedPaletteMap->palletteCollectionID =
@@ -376,13 +386,13 @@ class entityDataExtractor {
 		}
 		void printPaletteMapData(paletteMap* data){
 			printTitle("Palette Map");
-			cout << "\tpaletteCollection ID: " << data->palletteCollectionID << endl;
-			cout << "\tpaletteMap ID: " << data->paletteMapID << endl;
+			std::cout << "\tpaletteCollection ID: " << data->palletteCollectionID << std::endl;
+			std::cout << "\tpaletteMap ID: " << data->paletteMapID << std::endl;
 		}
 
-		list<symbol*>* getSymbols(Json::Value data){
-			const string sectionName = "symbols";
-			list<symbol*> *extracteSymbols = new list<symbol*>;
+		std::list<symbol*>* getSymbols(Json::Value data){
+			const std::string sectionName = "symbols";
+			std::list<symbol*> *extracteSymbols = new std::list<symbol*>;
 
 			unsigned int dataIndex = 0;
 			while(data[sectionName][dataIndex]){
@@ -466,63 +476,65 @@ class entityDataExtractor {
 
 			return nullptr;
 		}
-		void printSymbolData(list<symbol*>* data){
+		void printSymbolData(std::list<symbol*>* data){
 			printTitle("Symbols");
 			for(symbol* entry : *data){
-				cout << "\tid: " << entry->id << endl;
-				cout << "\talpha: " << entry->alpha << endl;
+				std::cout << "\tid: " << entry->id << std::endl;
+				std::cout << "\talpha: " << entry->alpha << std::endl;
 
 				printSymbolTypeData(entry);
 
-				cout << endl;
+				std::cout << std::endl;
 			}
 		}
 		void printSymbolTypeData(symbol* data){
 			if(symbolImage* image = dynamic_cast<symbolImage*>(data)){
-				cout << "\tx: " << image->x << endl;
-				cout << "\ty: " << image->y << endl;
-				cout << "\trotation: " << image->rotation << endl;
-				cout << "\tscaleX: " << image->scaleX << endl;
-				cout << "\tscaleY: " << image->scaleY << endl;
-				cout << "\tpivotX: " << image->pivotX << endl;
-				cout << "\tpivotY: " << image->pivotY << endl;
+				std::cout << "\tx: " << image->x << std::endl;
+				std::cout << "\ty: " << image->y << std::endl;
+				std::cout << "\trotation: " << image->rotation << std::endl;
+				std::cout << "\tscaleX: " << image->scaleX << std::endl;
+				std::cout << "\tscaleY: " << image->scaleY << std::endl;
+				std::cout << "\tpivotX: " << image->pivotX << std::endl;
+				std::cout << "\tpivotY: " << image->pivotY << std::endl;
 			}
 			else if(symbolCollisionBox* collisionBox = dynamic_cast<symbolCollisionBox*>(data)){
-				cout << "\tcolor: " << collisionBox->color << endl;
-				cout << "\tx: " << collisionBox->x << endl;
-				cout << "\ty: " << collisionBox->y << endl;
-				cout << "\trotation: " << collisionBox->rotation << endl;
-				cout << "\tscaleX: " << collisionBox->scaleX << endl;
-				cout << "\tscaleY: " << collisionBox->scaleY << endl;
-				cout << "\tpivotX: " << collisionBox->pivotX << endl;
-				cout << "\tpivotY: " << collisionBox->pivotY << endl;
+				std::cout << "\tcolor: " << collisionBox->color << std::endl;
+				std::cout << "\tx: " << collisionBox->x << std::endl;
+				std::cout << "\ty: " << collisionBox->y << std::endl;
+				std::cout << "\trotation: " << collisionBox->rotation << std::endl;
+				std::cout << "\tscaleX: " << collisionBox->scaleX << std::endl;
+				std::cout << "\tscaleY: " << collisionBox->scaleY << std::endl;
+				std::cout << "\tpivotX: " << collisionBox->pivotX << std::endl;
+				std::cout << "\tpivotY: " << collisionBox->pivotY << std::endl;
 			}
 			else if(symbolCollisionBody* collisionBody = dynamic_cast<symbolCollisionBody*>(data)){
-				cout << "\tcolor: " << collisionBody->color << endl;
-				cout << "\thead: " << collisionBody->head << endl;
-				cout << "\thipWidth: " << collisionBody->hipWidth << endl;
-				cout << "\thipXOffset: " << collisionBody->hipXOffset << endl;
-				cout << "\thipYOffset: " << collisionBody->hipYOffset << endl;
-				cout << "\tfoot: " << collisionBody->foot << endl;
+				std::cout << "\tcolor: " << collisionBody->color << std::endl;
+				std::cout << "\thead: " << collisionBody->head << std::endl;
+				std::cout << "\thipWidth: " << collisionBody->hipWidth << std::endl;
+				std::cout << "\thipXOffset: " << collisionBody->hipXOffset << std::endl;
+				std::cout << "\thipYOffset: " << collisionBody->hipYOffset << std::endl;
+				std::cout << "\tfoot: " << collisionBody->foot << std::endl;
 			}
 			else if(symbolPoint* point = dynamic_cast<symbolPoint*>(data)){
-				cout << "\tcolor: " << point->color << endl;
-				cout << "\tx: " << point->x << endl;
-				cout << "\ty: " << point->y << endl;
-				cout << "\trotation: " << point->rotation << endl;
+				std::cout << "\tcolor: " << point->color << std::endl;
+				std::cout << "\tx: " << point->x << std::endl;
+				std::cout << "\ty: " << point->y << std::endl;
+				std::cout << "\trotation: " << point->rotation << std::endl;
 			}
 			else if(symbolLineSegment* lineSegment = dynamic_cast<symbolLineSegment*>(data)){
-				cout << "\tcolor: " << lineSegment->color << endl;
-				cout << "\tx1: " << lineSegment->x1 << endl;
-				cout << "\ty1: " << lineSegment->y1 << endl;
-				cout << "\tx2: " << lineSegment->x2 << endl;
-				cout << "\ty2: " << lineSegment->y2 << endl;
+				std::cout << "\tcolor: " << lineSegment->color << std::endl;
+				std::cout << "\tx1: " << lineSegment->x1 << std::endl;
+				std::cout << "\ty1: " << lineSegment->y1 << std::endl;
+				std::cout << "\tx2: " << lineSegment->x2 << std::endl;
+				std::cout << "\ty2: " << lineSegment->y2 << std::endl;
 			}
 		}
 
-		void printTitle(string title){
-			cout << "=========================================\n";
-			cout << title << endl;
-			cout << "=========================================\n";
+		void printTitle(std::string title){
+			std::cout << "=========================================\n";
+			std::cout << title << std::endl;
+			std::cout << "=========================================\n";
 		}
 };
+
+#endif
