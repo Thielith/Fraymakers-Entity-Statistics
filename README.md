@@ -7,7 +7,7 @@ Define the .entity file to be used with `(--file or -f) [path-to-file]`
 If you want to output to a file, use flag `(--output or -o) [path/to/save/output.txt]`
 
 ## Libraries Used
-- [jsoncpp](https://github.com/open-source-parsers/jsoncpp): For parsing the .entity files
+- [Entity Extractor](https://github.com/Thielith/Fraymakers-Entity-Data-Extractor): For extracting the data from the .entity files
 
 ## Compiling (Devs)
 ### Linux
@@ -27,7 +27,7 @@ If these instructions fail, please create an issue about it.
 5. With `main.cpp` selected, click the run button in the top right (looks like a > play button)
 
 #### Option 2:  CMake
-3. Install CMake
+3. Install [CMake](https://cmake.org/)
 4. Download [Ninja](https://ninja-build.org/) and put it somewhere safe
 5. Add the following enviroment variables (User or System)
     - `CC` which points to `[/path/to/msys64]/ucrt64/bin/gcc.exe`
