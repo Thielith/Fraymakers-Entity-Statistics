@@ -1,12 +1,7 @@
 #ifndef ENTITY_DATA_EXTRACTOR_H
 #define ENTITY_DATA_EXTRACTOR_H
 
-// Linux
-#include <json/json.h>
-// Windows
-// #include "external/jsoncpp-master/src/lib_json/json_reader.cpp"
-// #include "external/jsoncpp-master/src/lib_json/json_value.cpp"
-// #include "external/jsoncpp-master/src/lib_json/json_writer.cpp"
+#include "../external/jsoncpp.cpp"
 
 #include "stat-tracker.h"
 #include "struct-definitions.h"
