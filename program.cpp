@@ -1,6 +1,7 @@
+#include <iomanip>
 #include <list>
-#include "program.h"
-#include "stat-tracker.h"
+#include "headers/program.h"
+#include "headers/stat-tracker.h"
 
 using namespace std;
 
@@ -52,6 +53,11 @@ int main(int argc, char *argv[]){
 		i++;
 	}
 	
+	if(!fileDefined){
+		cout << "Error: No file defined.\n";
+		return -1;
+	}
+
 	processEntity(filePath);
 	tracker.printStats(outputFilePath);
 
@@ -130,15 +136,13 @@ void printRepetitiveCode(){
 }
 
 void printHelpMessage(){
-	cout << "Optional:\n"
-		 << "-h:\t\t" << "Prints program usage" << endl
-		 << "--output [path+name]\t\t" << "Outputs statistics to a file" << endl
-		 << "-o [path+name]\t\t" << "Alias of --output" << endl
-		 << endl
-		 
-		 << "Mandatory:\n"
-		 << "--file [path]\t\t" << "Path to .entity file" << endl
-		 << "-f [path]\t\t" << "Alias of --file" << endl
+	cout << "Usage:  program -f [file] [options]\n"
+		 << endl;
+
+	cout << "Options:\n"
+		 << setw(30) << left << "-h:" << "Prints program usage" << endl
+		 << setw(30) << left << "-f, --file [path]" << "Path to .entity file" << endl
+		 << setw(30) << left << "-o, --output [path+name]" << "Outputs statistics to a file named [name] in [path]" << endl
 
 		 << endl;
 }

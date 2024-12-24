@@ -13,7 +13,7 @@ DEPENDACIES := $(SOURCE:.cpp=.d)
 all: linking
 
 clean:
-	$(RM) $(OBJS) $(DEPENDACIES) linking
+	$(RM) $(OBJS) $(DEPENDACIES) $(RESULT) linking
 
 linking: $(OBJS)
 	$(COMPILER) $(FLAGS_ERROR) $(FLAGS) $^ -o $(RESULT)

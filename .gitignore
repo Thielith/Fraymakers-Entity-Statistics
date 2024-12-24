@@ -1,7 +1,6 @@
-*.entity
 .vscode
 *.d
 *.o
-*.txt
 external
 build
+samples

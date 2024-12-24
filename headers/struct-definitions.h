@@ -149,7 +149,7 @@ struct symbolLineSegment : symbol {
 	float y2 = 0.0;
 };
 
-typedef struct {
+typedef struct entityData {
 	list<animation>* animations;
 	bool shouldExport = true;
 	string guid;
