@@ -51,6 +51,20 @@ enum SYMBOL_TYPE {
 	SYM_LINE_SEGMENT
 };
 
+enum OBJECT_TYPE {
+	OBJ_NONE,
+	OBJ_CHARACTER,
+	OBJ_PROJECTILE,
+	OBJ_ASSIST,
+	OBJ_STAGE,
+	OBJ_COLLISION_AREA,
+	OBJ_RECT_COLLISION_AREA,
+	OBJ_RECT_STRUCTURE,
+	OBJ_LINE_SEGMENT_STRUCTURE,
+	OBJ_MATCH_RULES,
+	OBJ_CUSTOM_GAME_OBJECT
+};
+
 class enumTranslate {
 	private:
 		map<string, KEYFRAME_LAYER_TYPE> mapToKeyframeLayerType {
@@ -147,6 +161,33 @@ class enumTranslate {
 			{SYM_LINE_SEGMENT, "LINE_SEGMENT"}
 		};
 
+		map<string, OBJECT_TYPE> mapToObjectType {
+			{"NONE", OBJ_NONE},
+			{"CHARACTER", OBJ_CHARACTER},
+			{"PROJECTILE", OBJ_PROJECTILE},
+			{"ASSIST", OBJ_ASSIST},
+			{"STAGE", OBJ_STAGE},
+			{"COLLISION_AREA", OBJ_COLLISION_AREA},
+			{"RECT_COLLISION_AREA", OBJ_RECT_COLLISION_AREA},
+			{"RECT_STRUCTURE", OBJ_RECT_STRUCTURE},
+			{"LINE_SEGMENT_STRUCTURE", OBJ_LINE_SEGMENT_STRUCTURE},
+			{"MATCH_RULES", OBJ_MATCH_RULES},
+			{"CUSTOM_GAME_OBJECT", OBJ_CUSTOM_GAME_OBJECT}
+		};
+		map<OBJECT_TYPE, string> mapToObjectTypeName {
+			{OBJ_NONE, "NONE"},
+			{OBJ_CHARACTER, "CHARACTER"},
+			{OBJ_PROJECTILE, "PROJECTILE"},
+			{OBJ_ASSIST, "ASSIST"},
+			{OBJ_STAGE, "STAGE"},
+			{OBJ_COLLISION_AREA, "COLLISION_AREA"},
+			{OBJ_RECT_COLLISION_AREA, "RECT_COLLISION_AREA"},
+			{OBJ_RECT_STRUCTURE, "RECT_STRUCTURE"},
+			{OBJ_LINE_SEGMENT_STRUCTURE, "LINE_SEGMENT_STRUCTURE"},
+			{OBJ_MATCH_RULES, "MATCH_RULES"},
+			{OBJ_CUSTOM_GAME_OBJECT, "CUSTOM_GAME_OBJECT"}
+		};
+
 	public:
 		KEYFRAME_LAYER_TYPE toKeyframeLayerEnum(string input){ return mapToKeyframeLayerType[input]; };
 		string toString(KEYFRAME_LAYER_TYPE input){ return mapToKeyframeLayerTypeName[input]; };
@@ -159,5 +200,8 @@ class enumTranslate {
 
 		SYMBOL_TYPE toSymbolEnum(string input){ return mapToSymbolType[input]; };
 		string toString(SYMBOL_TYPE input){ return mapToSymbolTypeName[input]; };
+
+		OBJECT_TYPE toObjectEnum(string input){ return mapToObjectType[input]; };
+		string toString(OBJECT_TYPE input){ return mapToObjectTypeName[input]; };
 		
 };

@@ -151,11 +151,13 @@ struct symbolLineSegment : symbol {
 
 typedef struct entityData {
 	list<animation>* animations;
-	bool shouldExport = true;
+	bool shouldExport;
 	string guid;
 	string id;
 	list<keyframe*>* keyframes;
 	list<layer*>* layers;
 	::paletteMap* paletteMap;
 	list<symbol*>* symbols;
+	OBJECT_TYPE objectType;
+	string objectVersion;
 } entityData;
