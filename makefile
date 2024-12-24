@@ -1,9 +1,8 @@
 COMPILER := g++
-FLAGS := -ljsoncpp
 FLAGS_ERROR := -Wall -Wextra -Werror
 
 SOURCE := main.cpp
-RESULT := entityStatExtractor
+RESULT := EntityStatsExtractor
 OBJS = $(SOURCE:.cpp=.o)
 DEPENDACIES := $(SOURCE:.cpp=.d)
 
