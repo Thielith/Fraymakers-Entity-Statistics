@@ -1,12 +1,6 @@
-#include <iostream>
-#include <iomanip>
-
-#include "fraymakers-entity-data-extractor/extractor.cpp"
+#include "main.h"
 
 using namespace std;
-
-void printRepetitiveCode();
-void printHelpMessage();
 
 int main(int argc, char *argv[]){
 	// printRepetitiveCode();
@@ -54,9 +48,9 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 
-	entityDataExtractor* extractor;
-	extractor->extractEntityData(filePath);
-	extractor->printStats(outputFilePath);
+	entityDataExtractor extractor;
+	extractor.extractEntityData(filePath);
+	extractor.printStats(outputFilePath);
 
 }
 
