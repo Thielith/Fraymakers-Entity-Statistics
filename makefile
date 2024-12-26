@@ -1,8 +1,8 @@
 COMPILER := g++
-FLAGS := -L/usr/local/lib -lEntityExtractor -I/usr/local/include
+LOOK_HERE_TOO := -L/usr/local/lib -I/usr/local/include
 FLAGS_ERROR := -Wall -Wextra -Werror
 
-SOURCE := main.cpp
+SOURCE := main.cpp 
 RESULT := EntityStatsExtractor
 OBJS = $(SOURCE:.cpp=.o)
 DEPENDACIES := $(SOURCE:.cpp=.d)
@@ -13,10 +13,10 @@ DEPENDACIES := $(SOURCE:.cpp=.d)
 all: linking
 
 linking: $(OBJS)
-	$(COMPILER) $(FLAGS_ERROR) $(FLAGS) $^ -o $(RESULT)
+	$(COMPILER) $(FLAGS_ERROR) $(LOOK_HERE_TOO) $^ -o $(RESULT) -lEntityDataExtractor -ljsoncpp
 
 %.o: %.cpp
-	$(COMPILER) $(FLAGS_ERROR) $(FLAGS) -MMD -MP -c $< -o $@
+	$(COMPILER) $(FLAGS_ERROR) $(LOOK_HERE_TOO) -MMD -MP -c $< -o $@
 
 clean:
 	$(RM) $(OBJS) $(DEPENDACIES) $(RESULT)

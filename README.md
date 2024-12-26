@@ -1,20 +1,26 @@
-# Fraymakers-Entity-Statistics
+# Fraymakers Entity Statistics
  Prints out statistics related to an Fraymakers Custom Content .entity file.
 
 ## Usage
-Define the .entity file to be used with `(--file or -f) [path-to-file]`
+Define the .entity file to be used with `(-f --file) [path/to/file.entity]`
 
-If you want to output to a file, use flag `(--output or -o) [path/to/save/output.txt]`
+If you want to output to a file, use the flags `(-o or --output) [path/to/save/output.txt]`
+
+The program prints this information with `-h` if you ever forget.
 
 ## Libraries Used
 - [Entity Extractor](https://github.com/Thielith/Fraymakers-Entity-Data-Extractor): For extracting the data from the .entity files
 
-## Compiling (Devs)
+## Compiling the Stuff in the Repository
+1. Follow the install instructions for the used libraries.
+2. Pick your ~~poison~~ platform of choice below.
+
 ### Linux
 1. Download source files.
-2. Run the makefile.
+2. Run the included makefile.
+    - Note:  It assumes you followed the instructions from the [Entity Extractor](https://github.com/Thielith/Fraymakers-Entity-Data-Extractor) library page and put the libraries and header stuff in `/usr/local/lib` and `/usr/local/include` respectivley.  If you didn't, then modify the paths in the `LOOK_HERE_TOO` makefile variable.
 
-### Windows
+### Windows (outdated, probably)
 Setting up the right dependicies on Windows took me a long time so there will be unnecessary steps below if you're an experienced dev.
 If these instructions fail, please create an issue about it.
 
